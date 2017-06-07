@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">GeoQuiz</string>
+    <string name="true_button">True</string>
+    <string name="false_button">False</string>
+    <string name="previous_button">Prev</string>
+    <string name="next_button">Next</string>
+    <string name="correct_toast">Correct!</string>
+    <string name="incorrect_toast">Incorrect!</string>
+    <string name="question_text">Is Tokyo the capital of Japan?</string>
+
+    <string-array name="questions">
+        <item>Is Saigon the biggest city in VN?</item>
+        <item>Bill Gates is the richest man in the world?</item>
+        <item>There are more men than women?</item>
+
+    </string-array>
+
+    <integer-array name="answers">
+        <item>1</item>
+        <item>1</item>
+        <item>0</item>
+
+    </integer-array>
 </resources>
