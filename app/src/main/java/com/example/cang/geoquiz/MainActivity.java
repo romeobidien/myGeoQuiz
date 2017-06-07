@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView mTextViewQuestion;
     String[] mQuestions;
     boolean[] mAnswers;
+    boolean[] mIsDone;
     int mCurrentIndex = 0;
 
     @Override
@@ -37,31 +38,62 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         init();
 
         mTextViewQuestion = (TextView) findViewById(R.id.questionView);
-        mTextViewQuestion.setText(mQuestions[mCurrentIndex]);
+
+        updateUI();
     }
 
     @Override
     public void onClick(View v) {
-        String message;
+        String message ="";
+        int len = mQuestions.length;
         switch (v.getId()) {
             case R.id.button_true:
-                message = "True Button";
+//                message = "True Button";
+                checkAnser(true);
                 break;
             case R.id.button_false:
-                message = "False Button";
+//                message = "False Button";
+                checkAnser(false);
                 break;
             case R.id.prev_button:
-                message = "Prev Button";
+//                message = "Prev Button clicked";
+                mCurrentIndex = (mCurrentIndex + len - 1)%len;
+                updateUI();
                 break;
             case R.id.next_button:
-                message = "Next Button";
+                mCurrentIndex = (mCurrentIndex + 1)%len;
+                updateUI();
+//                message = "Next Button clicked";
                 break;
             default:
-                message = "";
+//                message = "";
         }
 
-        message = message + " clicked";
+//        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateUI() {
+        mTextViewQuestion.setText(mQuestions[mCurrentIndex]);
+        setAnserAvailability(!mIsDone[mCurrentIndex]);
+    }
+
+    private void setAnserAvailability(boolean visible) {
+        mTrueButton.setEnabled(visible);
+        mFalseButton.setEnabled(visible);
+    }
+
+    private void checkAnser(boolean answer) {
+        String message;
+        if (mAnswers[mCurrentIndex] == answer) {
+            message = getString(R.string.correct_toast);
+        } else {
+            message = getString(R.string.incorrect_toast);
+        }
+
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
+        setAnserAvailability(false);
+        mIsDone[mCurrentIndex] = true;
     }
 
     private void init() {
@@ -76,9 +108,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int[] tmp = res.getIntArray(R.array.answers);
         int length = tmp.length;
         mAnswers = new boolean[length];
+        mIsDone = new boolean[length];
         for (int i = 0; i < length; i++) {
             mAnswers[i] = tmp[i] == 1 ? true : false;
+            mIsDone[i] = false;
         }
-
     }
 }
