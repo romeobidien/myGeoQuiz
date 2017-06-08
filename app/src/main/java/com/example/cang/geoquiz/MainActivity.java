@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    private static final String KEY_CURRENT_INDEX = "current index";
+    private static final String KEY_IS_DONE = "Is done";
 
     Button mTrueButton, mFalseButton, mNextButton, mPrevButton;
     TextView mTextViewQuestion;
@@ -23,6 +25,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        init();
+
+        if (savedInstanceState != null) {
+            mCurrentIndex = savedInstanceState.getInt(KEY_CURRENT_INDEX);
+            mIsDone = savedInstanceState.getBooleanArray(KEY_IS_DONE);
+        }
+
         mTrueButton = (Button) findViewById(R.id.button_true);
         mTrueButton.setOnClickListener(this);
 
@@ -35,11 +44,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mPrevButton = (Button) findViewById(R.id.prev_button);
         mPrevButton.setOnClickListener(this);
 
-        init();
-
         mTextViewQuestion = (TextView) findViewById(R.id.questionView);
 
         updateUI();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_CURRENT_INDEX, mCurrentIndex);
+        outState.putBooleanArray(KEY_IS_DONE, mIsDone);
     }
 
     @Override
@@ -63,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
         }
     }
+
 
     private void updateUI() {
         mTextViewQuestion.setText(mQuestions[mCurrentIndex]);
@@ -90,8 +105,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void init() {
         initQuestionBanks();
-
-        mCurrentIndex = 0;
     }
 
     private void initQuestionBanks() {
@@ -103,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mIsDone = new boolean[length];
         for (int i = 0; i < length; i++) {
             mAnswers[i] = tmp[i] == 1 ? true : false;
-            mIsDone[i] = false;
         }
     }
 }
