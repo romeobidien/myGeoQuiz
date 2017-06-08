@@ -21,4 +21,9 @@
         <item>0</item>
 
     </integer-array>
+
+    <string name="judgment_toast">Cheating is wrong.</string>
+    <string name="cheat_text">Are you sure you want to do this?</string>
+    <string name="show_answer_button_text">Show Anser</string>
+    <string name="cheat_button_text">Cheat!</string>
 </resources>

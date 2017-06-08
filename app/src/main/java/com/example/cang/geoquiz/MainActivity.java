@@ -1,5 +1,6 @@
 package com.example.cang.geoquiz;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.service.carrier.CarrierService;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +13,9 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String KEY_CURRENT_INDEX = "current index";
     private static final String KEY_IS_DONE = "Is done";
+    public static final String EXTRA_ANSWER = "Extra Answer";
 
-    Button mTrueButton, mFalseButton, mNextButton, mPrevButton;
+    Button mTrueButton, mFalseButton, mNextButton, mPrevButton, mCheatButton;
     TextView mTextViewQuestion;
     String[] mQuestions;
     boolean[] mAnswers;
@@ -46,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mTextViewQuestion = (TextView) findViewById(R.id.questionView);
 
+        mCheatButton = (Button) findViewById(R.id.cheat_button);
+        mCheatButton.setOnClickListener(this);
+
         updateUI();
     }
 
@@ -74,6 +79,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mCurrentIndex = (mCurrentIndex + 1)%len;
                 updateUI();
                 break;
+            case R.id.cheat_button:
+                Intent intent = new Intent(this, CheatActivity.class);
+                intent.putExtra(EXTRA_ANSWER, mAnswers[mCurrentIndex]);
+                startActivity(intent);
             default:
         }
     }
