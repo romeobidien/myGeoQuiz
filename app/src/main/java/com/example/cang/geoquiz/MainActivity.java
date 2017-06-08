@@ -44,32 +44,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        String message ="";
         int len = mQuestions.length;
         switch (v.getId()) {
             case R.id.button_true:
-//                message = "True Button";
                 checkAnser(true);
                 break;
             case R.id.button_false:
-//                message = "False Button";
                 checkAnser(false);
                 break;
             case R.id.prev_button:
-//                message = "Prev Button clicked";
                 mCurrentIndex = (mCurrentIndex + len - 1)%len;
                 updateUI();
                 break;
             case R.id.next_button:
                 mCurrentIndex = (mCurrentIndex + 1)%len;
                 updateUI();
-//                message = "Next Button clicked";
                 break;
             default:
-//                message = "";
         }
-
-//        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     private void updateUI() {
